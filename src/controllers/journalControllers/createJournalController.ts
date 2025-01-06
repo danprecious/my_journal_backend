@@ -1,6 +1,6 @@
-import { catchError } from "../utils/isError.js";
-import { createJournal } from "../services/journalServices.js";
-import { CreateJournalInput } from "../types/globalTypes.js";
+import { catchError } from "../../utils/isError.js";
+import { createJournal } from "../../services/journalServices.js";
+import { CreateJournalInput } from "../../types/globalTypes.js";
 import { Request, Response } from "express";
 
 export const createJournalController = async (

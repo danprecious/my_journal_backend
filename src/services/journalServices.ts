@@ -13,7 +13,7 @@ export const createJournal = async ({ title, content }: CreateJournalInput) => {
     catchError(error, "Error creating a new journal");
   }
 };
-
+ 
 export const deleteJournal = async (id: string) => {
   try {
     const deletedJournal = await prisma.journal.delete({

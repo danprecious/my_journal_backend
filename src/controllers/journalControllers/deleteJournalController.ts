@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { deleteJournal } from "services/journalServices.js";
-import { catchError } from "../utils/isError.js";
+import { catchError } from "../../utils/isError.js";
 
 export const deleteJournalController = async (req: Request, res: Response) => {
   try {

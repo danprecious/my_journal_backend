@@ -13,3 +13,10 @@ export interface Journal {
   title: string;
   content: string;
 }
+
+export interface CreateUser {
+  email: string;
+  name: string | null;
+  password: string
+} 
+
