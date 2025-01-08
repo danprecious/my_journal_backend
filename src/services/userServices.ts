@@ -1,12 +1,28 @@
 import { Request } from "express";
-import prisma from "prisma/client.js";
-import { CreateUser } from "types/globalTypes.js";
-import { catchError } from "utils/isError.js";
+import prisma from "../prisma/client.js";
+import { CreateUser } from "../types/globalTypes.js";
+import { catchError } from "../utils/isError.js";
 
-export const createNewUser = async ({ email, password, name }: CreateUser) => {
+
+
+export const findUser = async (email: string) =>  {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email
+      }
+    })
+    return user
+}
+
+
+export const createNewUser = async ({
+  email,
+  hashedPassword,
+  name,
+}: CreateUser) => {
   try {
     const newUser = await prisma.user.create({
-      data: { email, password, name },
+      data: { email, password: hashedPassword, name },
     });
 
     return newUser;
@@ -25,7 +41,7 @@ export const deleteUser = async (id: string) => {
 
     return deletedUser;
   } catch (error) {
-    catchError(error, "Error deleting user")
+    catchError(error, "Error deleting user");
   }
 };
 
@@ -40,6 +56,6 @@ export const deleteUser = async (id: string) => {
 //             }
 //         })
 //     } catch (error) {
-        
+
 //     }
-// } 
+// }

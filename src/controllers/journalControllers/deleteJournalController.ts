@@ -11,6 +11,8 @@ export const deleteJournalController = async (req: Request, res: Response) => {
         deletedJournal: delJournal 
     })
   } catch (error) {
-    catchError(error, "Error deleting journal")
+      return res.status(500).json({
+        error: "Internal server error: error deleting journal"
+      })
   }
 };

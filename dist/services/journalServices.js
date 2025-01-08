@@ -1,5 +1,5 @@
-import prisma from "../prisma/client";
-import { catchError } from "../utils/isError";
+import prisma from "../prisma/client.js";
+import { catchError } from "../utils/isError.js";
 export const createJournal = async ({ title, content }) => {
     try {
         const newJournal = await prisma.journal.create({
