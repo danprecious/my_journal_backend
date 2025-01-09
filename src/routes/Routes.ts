@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { loginUserController } from "../controllers/userController/loginUserController.js";
 import { createJournalController } from "../controllers/journalControllers/createJournalController.js";
 import { createUserController } from "../controllers/userController/createUserController.js";
+import { authenticate } from "../middleware/authenticate.js";
 
 export const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get("/test", (req: Request, res: Response) => {
   });
 });
 
-router.post("/createJournal", createJournalController);
+router.post("/createJournal", authenticate, createJournalController);
 
 router.post("/createUser", createUserController)
 

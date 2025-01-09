@@ -12,7 +12,7 @@ export const generateToken = (userId: string): string => {
   return token;
 };
 
-export const verifyToken = (token: string): JwtPayload => {
+export const verifyToken = (token: string ): JwtPayload => {
   return jwt.verify(token, JWT_SECRET) as JwtPayload ;
 };
 
