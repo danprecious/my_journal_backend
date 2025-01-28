@@ -34,8 +34,8 @@ export const createUserController = async (
     });
     return
   } catch (error) {
-
-      catchError(error, "Error creating user")
+    console.error(error);
+      // catchError(error, "Error creating user")
    res.status(500).json({
       error: "Error creating user, please try again",
     });

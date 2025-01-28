@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from "express";
-import { verifyToken } from "services/jwtToken.js";
-import { catchError } from "utils/isError.js";
+import { verifyToken } from "../services/jwtToken.js";
+
 
 export const authenticate = async (
   req: Request,
@@ -17,9 +17,9 @@ export const authenticate = async (
 
   if (typeof token === "string" && token) {
     try {
-      const decodedToken = verifyToken(token); // Verify and decode the token
-      (req as any).user = decodedToken; // Attach decoded user info to the request
-      return next(); // Proceed to the next middleware
+      const decodedToken = verifyToken(token); 
+      (req as any).user = decodedToken; 
+      return next(); 
     } catch (error) {
       res.status(401).json({ message: "Invalid or expired token." });
     }

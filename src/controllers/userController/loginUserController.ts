@@ -40,7 +40,12 @@ export const loginUserController = async (
       token: generatedToken,
     };
 
-    res.status(200).json({
+    res.status(200).cookie('token', generatedToken, {
+      httpOnly: true, 
+      secure: true, 
+      sameSite: "none",
+      maxAge: 3600 * 2000,  
+    }).json({
       message: "Login succesful",
       user: userSession,
     });
