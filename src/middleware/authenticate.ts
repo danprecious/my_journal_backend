@@ -7,15 +7,17 @@ export const authenticate = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const authHeader = req.headers.authorization;
+  const token = req.cookies.token;
 
-  if (!authHeader) {
+console.log(token);
+
+  if (!token) {
     res.status(401).json({ message: "Access denied. malformed token" });
   }
-
-  const token = authHeader?.split(" ")[1];
-
   if (typeof token === "string" && token) {
+
+  
+
     try {
       const decodedToken = verifyToken(token); 
       (req as any).user = decodedToken; 
