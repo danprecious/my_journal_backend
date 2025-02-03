@@ -4,6 +4,7 @@ import { loginUserController } from "../controllers/userController/loginUserCont
 import { createJournalController } from "../controllers/journalControllers/createJournalController.js";
 import { createUserController } from "../controllers/userController/createUserController.js";
 import { authenticate } from "../middleware/authenticate.js";
+import { forgotPaswordController } from "controllers/userController/forgotPasswordController.js";
 
 export const router = express.Router();
 
@@ -28,5 +29,7 @@ router.post("/createJournal", authenticate, createJournalController);
 router.post("/createUser", createUserController)
 
 router.post("/login", loginUserController);
+
+router.post("/forgotPassword,", forgotPaswordController);
 
 export default router;
