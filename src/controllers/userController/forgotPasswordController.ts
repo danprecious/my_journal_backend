@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { findUser } from "services/userServices.js";
+import { findUser } from "../../services/userServices.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
-import prisma from "prisma/client.js";
+import prisma from "../../prisma/client.js";
 
 const generateToken = () => {
   return crypto.randomBytes(20).toString("hex");
 };
 
-const sendResetPasswordMail = (email: string, token: string) => {
+const sendResetPasswordMail = async (email: string, token: string) => {
   const transporter = nodemailer.createTransport({
     host: "",
     port: 587,
@@ -25,9 +25,12 @@ const sendResetPasswordMail = (email: string, token: string) => {
     text: `Click on the link to reset your password: https://myJournal.vercel.app/resetPassword?token=${token}`,
   };
 
-  transporter.sendMail(mailOptions, (error) => {
-    if (error) console.error("Error sending mail", error);
-  });
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.log("Error sending mail", error);
+    throw new Error("Error sending mail");
+  }
 };
 
 export const forgotPaswordController = async (
@@ -53,6 +56,11 @@ export const forgotPaswordController = async (
           expiresAt: expiresAt,
         },
       });
+
+      console.log(resetToken);
+
+      await sendResetPasswordMail(email, token);
+      res.status(200).json({ message: "Reset email sent" });
     }
   } catch (error) {
     console.log("Internal server error");
