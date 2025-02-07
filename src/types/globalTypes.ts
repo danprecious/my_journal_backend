@@ -23,6 +23,7 @@ export interface CreateUser {
 } 
 
 export interface User {
+  // name: string;
   email: string;
   name: string | null;
   password: string
@@ -36,7 +37,6 @@ export interface LoginUser {
 export interface UserSession {
   email: string;
   name: string | null;
-  token: JwtPayload | string,
   journals: []
 }
 

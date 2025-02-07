@@ -30,14 +30,14 @@ export const loginUserController = async (
       });
       return;
     }
-
+ 
     const generatedToken = generateToken(user.id);
 
     const userSession: UserSession = {
       email: user.email,
       name: user.name,
       journals: [],
-      token: generatedToken,
+
     };
 
     res.status(200).cookie('token', generatedToken, {
