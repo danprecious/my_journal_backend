@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -29,4 +28,9 @@ model Journal {
   content  String
   author   User?   @relation(fields: [authorId], references: [id])
   authorId String? @db.ObjectId
+}
+
+model BlackListedTokens {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  token String
 }

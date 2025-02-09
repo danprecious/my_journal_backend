@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import prisma from "../../prisma/client.js";
 import { generateToken } from "../../services/jwtToken.js";
 import { comparedPassword } from "../../services/passwordService.js";
 import { findUser } from "../../services/userServices.js";
@@ -37,16 +36,15 @@ export const loginUserController = async (
       email: user.email,
       name: user.name,
       journals: [],
-
     };
 
     res.status(200).cookie('token', generatedToken, {
       httpOnly: true, 
       secure: true, 
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 3600 * 2000,  
     }).json({
-      message: "Login succesful",
+      message: "Login successful",
       user: userSession,
     });
     return;

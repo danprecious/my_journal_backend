@@ -5,6 +5,7 @@ import { createJournalController } from "../controllers/journalControllers/creat
 import { createUserController } from "../controllers/userController/createUserController.js";
 import { authenticate } from "../middleware/authenticate.js";
 import { forgotPaswordController } from "../controllers/userController/forgotPasswordController.js";
+import { logoutController } from "../controllers/userController/logOutUser.js";
 
 export const router = express.Router();
 
@@ -14,6 +15,7 @@ router.get("/", (req: Request, res: Response) => {
     message: "api reached",
   });
 });
+
 router.get("/test", (req: Request, res: Response) => {
   console.log("api reached");
   res.status(200).json({
@@ -28,5 +30,7 @@ router.post("/createUser", createUserController)
 router.post("/login", loginUserController);
 
 router.post("/forgotPassword", forgotPaswordController);
+
+router.post("/logout", logoutController);
 
 export default router;

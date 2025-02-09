@@ -1,4 +1,3 @@
-import { error } from "console";
 import { Request, Response } from "express"
 
 export const resetPasswordController = async (req: Request, res: Response ) => {

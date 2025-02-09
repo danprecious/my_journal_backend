@@ -46,8 +46,9 @@ export const createUserController = async (
       .cookie("token", generatedToken, {
         httpOnly: true,
         secure: false,
-        sameSite: "none",
+        sameSite: "lax",
         maxAge:  7 * 24 * 60 * 60 * 1000,
+        path: '/'
       })
       .json({
         message: "User successfully registered",
