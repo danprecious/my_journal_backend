@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { generateToken } from "../../services/jwtToken.js";
+import { generateRefreshToken, generateToken } from "../../services/jwtToken.js";
 import { comparedPassword } from "../../services/passwordService.js";
 import { findUser } from "../../services/userServices.js";
 import { UserSession, User, LoginUser } from "../../types/globalTypes.js";
@@ -31,6 +31,7 @@ export const loginUserController = async (
     }
  
     const generatedToken = generateToken(user.id);
+    const refreshToken = generateRefreshToken(user.id);
 
     const userSession: UserSession = {
       email: user.email,
@@ -38,12 +39,23 @@ export const loginUserController = async (
       journals: [],
     };
 
-    res.status(200).cookie('token', generatedToken, {
+    res.cookie('token', generatedToken, {
       httpOnly: true, 
       secure: true, 
       sameSite: "lax",
-      maxAge: 3600 * 2000,  
-    }).json({
+      maxAge: 7 * 24 * 60 * 60 * 1000,  
+      partitioned: true,
+    })
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+      partitioned: true
+    })
+
+    res.status(200).json({
       message: "Login successful",
       user: userSession,
     });

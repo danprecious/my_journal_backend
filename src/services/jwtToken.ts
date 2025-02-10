@@ -12,6 +12,11 @@ export const generateToken = (userId: string): string => {
   return token;
 };
 
+export const generateRefreshToken = (userId: string) => {
+  const token = jwt.sign({userId}, JWT_SECRET, {expiresIn: '14d'});
+  return token;
+}
+
 export const verifyToken = (token: string ): JwtPayload => {
   return jwt.verify(token, JWT_SECRET) as JwtPayload ;
 };

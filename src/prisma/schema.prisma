@@ -34,3 +34,10 @@ model BlackListedTokens {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   token String
 }
+
+model RefreshToken {
+     id    String @id @default(auto()) @map("_id") @db.ObjectId
+     userId String
+     token  String
+     expiresAt DateTime
+}

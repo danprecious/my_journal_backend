@@ -1,19 +1,16 @@
 import { Request } from "express";
 import prisma from "../prisma/client.js";
-import { CreateUser } from "../types/globalTypes.js";
+import { CreateUser, RefreshToken } from "../types/globalTypes.js";
 import { catchError } from "../utils/isError.js";
 
-
-
-export const findUser = async (email: string) =>  {
-    const user = await prisma.user.findFirst({
-      where: {
-        email: email
-      }
-    })
-    return user
-}
-
+export const findUser = async (email: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+  return user;
+};
 
 export const createNewUser = async ({
   email,
@@ -42,6 +39,16 @@ export const deleteUser = async (id: string) => {
     return deletedUser;
   } catch (error) {
     catchError(error, "Error deleting user");
+  }
+};
+
+export const storeRefreshToken = async (refreshTokenObj: RefreshToken) => {
+  try {
+    const storedRefreshToken = await prisma.refreshToken.create({
+      data: refreshTokenObj,
+    });
+  } catch (error) {
+    catchError(error, "Error saving refresh token");
   }
 };
 

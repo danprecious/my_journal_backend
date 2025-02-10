@@ -19,14 +19,14 @@ export interface Journal {
 export interface CreateUser {
   email: string;
   name: string | null;
-  hashedPassword: string
-} 
+  hashedPassword: string;
+}
 
 export interface User {
   // name: string;
   email: string;
   name: string | null;
-  password: string
+  password: string;
 }
 
 export interface LoginUser {
@@ -37,16 +37,19 @@ export interface LoginUser {
 export interface UserSession {
   email: string;
   name: string | null;
-  journals: []
+  journals: [];
 }
 
 export interface JWTPayload {
   id: string;
-  iat: number,
-  exp: number
+  iat: number;
+  exp: number;
 }
 
-
-
+export interface RefreshToken {
+  userId: string;
+  token: string;
+  expiresAt: Date;
+}
 
 export const users: User[] = [];

@@ -4,7 +4,10 @@ import { hashPassword } from "../../services/passwordService.js";
 import { createNewUser, findUser } from "../../services/userServices.js";
 import { CreateUser, User } from "../../types/globalTypes.js";
 import { catchError } from "../../utils/isError.js";
-import { generateToken } from "../../services/jwtToken.js";
+import {
+  generateRefreshToken,
+  generateToken,
+} from "../../services/jwtToken.js";
 
 export const createUserController = async (
   req: Request<{}, {}, User>,
@@ -39,20 +42,28 @@ export const createUserController = async (
       return;
     }
     const generatedToken = generateToken(newUser.id);
+    const refreshToken = generateRefreshToken(newUser.id);
     console.log(generatedToken);
 
-    res
-      .status(200)
-      .cookie("token", generatedToken, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        maxAge:  7 * 24 * 60 * 60 * 1000,
-        path: '/'
-      })
-      .json({
-        message: "User successfully registered",
-      });
+    res.cookie("token", generatedToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      partitioned: true,
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+      partitioned: true,
+    });
+
+    res.status(200).json({
+      message: "User successfully registered",
+    });
     return;
   } catch (error) {
     console.error(error);
